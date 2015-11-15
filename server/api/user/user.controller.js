@@ -1,11 +1,11 @@
 'use strict';
 
-var User = require('./user.model');
-var passport = require('passport');
-var config = require('../../config/environment');
-var jwt = require('jsonwebtoken');
+const User = require('./user.model');
+const passport = require('passport');
+const config = require('../../config/environment');
+const jwt = require('jsonwebtoken');
 
-var validationError = function(res, err) {
+const validationError = function(res, err) {
   return res.status(422).json(err);
 };
 
@@ -24,12 +24,12 @@ exports.index = function(req, res) {
  * Creates a new user
  */
 exports.create = function (req, res, next) {
-  var newUser = new User(req.body);
+  let newUser = new User(req.body);
   newUser.provider = 'local';
   newUser.role = 'user';
   newUser.save(function(err, user) {
     if (err) return validationError(res, err);
-    var token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });
+    let token = jwt.sign({_id: user._id }, config.secrets.session, { expiresInMinutes: 60*5 });
     res.json({ token: token });
   });
 };
@@ -38,7 +38,7 @@ exports.create = function (req, res, next) {
  * Get a single user
  */
 exports.show = function (req, res, next) {
-  var userId = req.params.id;
+  let userId = req.params.id;
 
   User.findById(userId, function (err, user) {
     if (err) return next(err);
@@ -62,9 +62,9 @@ exports.destroy = function(req, res) {
  * Change a users password
  */
 exports.changePassword = function(req, res, next) {
-  var userId = req.user._id;
-  var oldPass = String(req.body.oldPassword);
-  var newPass = String(req.body.newPassword);
+  let userId = req.user._id;
+  let oldPass = String(req.body.oldPassword);
+  let newPass = String(req.body.newPassword);
 
   User.findById(userId, function (err, user) {
     if(user.authenticate(oldPass)) {
@@ -83,7 +83,7 @@ exports.changePassword = function(req, res, next) {
  * Get my info
  */
 exports.me = function(req, res, next) {
-  var userId = req.user._id;
+  let userId = req.user._id;
   User.findOne({
     _id: userId
   }, '-salt -hashedPassword', function(err, user) { // don't ever give out the password or salt
