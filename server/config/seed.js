@@ -5,8 +5,8 @@
 
 'use strict';
 
-const Thing = require('../api/thing/thing.model');
-const User = require('../api/user/user.model');
+let Thing = require('../api/thing/thing.model');
+let User = require('../api/user/user.model');
 
 Thing.find({}).remove(function() {
   Thing.create({

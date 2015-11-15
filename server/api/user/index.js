@@ -1,11 +1,11 @@
 'use strict';
 
-const express = require('express');
-const controller = require('./user.controller');
-const config = require('../../config/environment');
-const auth = require('../../auth/auth.service');
+let express = require('express');
+let controller = require('./user.controller');
+let config = require('../../config/environment');
+let auth = require('../../auth/auth.service');
 
-const router = express.Router();
+let router = express.Router();
 
 router.get('/', auth.hasRole('admin'), controller.index);
 router.delete('/:id', auth.hasRole('admin'), controller.destroy);

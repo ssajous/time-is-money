@@ -4,20 +4,20 @@
 
 'use strict';
 
-const express = require('express');
-const favicon = require('serve-favicon');
-const morgan = require('morgan');
-const compression = require('compression');
-const bodyParser = require('body-parser');
-const methodOverride = require('method-override');
-const cookieParser = require('cookie-parser');
-const errorHandler = require('errorhandler');
-const path = require('path');
-const config = require('./environment');
-const passport = require('passport');
+let express = require('express');
+let favicon = require('serve-favicon');
+let morgan = require('morgan');
+let compression = require('compression');
+let bodyParser = require('body-parser');
+let methodOverride = require('method-override');
+let cookieParser = require('cookie-parser');
+let errorHandler = require('errorhandler');
+let path = require('path');
+let config = require('./environment');
+let passport = require('passport');
 
 module.exports = function(app) {
-  const env = app.get('env');
+  let env = app.get('env');
 
   app.set('views', config.root + '/server/views');
   app.engine('html', require('ejs').renderFile);

@@ -1,9 +1,9 @@
 'use strict';
 
-const express = require('express');
-const controller = require('./thing.controller');
+let express = require('express');
+let controller = require('./thing.controller');
 
-const router = express.Router();
+let router = express.Router();
 
 router.get('/', controller.index);
 router.get('/:id', controller.show);

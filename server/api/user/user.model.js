@@ -1,11 +1,11 @@
 'use strict';
 
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
-const crypto = require('crypto');
-const authTypes = ['github', 'twitter', 'facebook', 'google'];
+let mongoose = require('mongoose');
+let Schema = mongoose.Schema;
+let crypto = require('crypto');
+let authTypes = ['github', 'twitter', 'facebook', 'google'];
 
-const UserSchema = new Schema({
+let UserSchema = new Schema({
   name: String,
   email: { type: String, lowercase: true },
   role: {
@@ -78,7 +78,7 @@ UserSchema
 UserSchema
   .path('email')
   .validate(function(value, respond) {
-    const self = this;
+    let self = this;
     this.constructor.findOne({email: value}, function(err, user) {
       if(err) throw err;
       if(user) {
@@ -89,7 +89,7 @@ UserSchema
     });
 }, 'The specified email address is already in use.');
 
-const validatePresenceOf = function(value) {
+let validatePresenceOf = function(value) {
   return value && value.length;
 };
 

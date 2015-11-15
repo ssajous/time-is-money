@@ -1,11 +1,11 @@
 'use strict';
 
-const User = require('./user.model');
-const passport = require('passport');
-const config = require('../../config/environment');
-const jwt = require('jsonwebtoken');
+let User = require('./user.model');
+let passport = require('passport');
+let config = require('../../config/environment');
+let jwt = require('jsonwebtoken');
 
-const validationError = function(res, err) {
+let validationError = function(res, err) {
   return res.status(422).json(err);
 };
 

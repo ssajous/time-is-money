@@ -4,7 +4,7 @@
 
 'use strict';
 
-const config = require('./environment');
+let config = require('./environment');
 
 // When the user disconnects.. perform this
 function onDisconnect(socket) {
@@ -13,7 +13,7 @@ function onDisconnect(socket) {
 // When the user connects.. perform this
 function onConnect(socket) {
   // When the client emits 'info', this listens and executes
-  socket.on('info', function (data) {
+  socket.on('info', data => {
     console.info('[%s] %s', socket.address, JSON.stringify(data, null, 2));
   });
 
@@ -37,7 +37,7 @@ module.exports = function (socketio) {
   //   handshake: true
   // }));
 
-  socketio.on('connection', function (socket) {
+  socketio.on('connection', socket => {
     socket.address = socket.handshake.address !== null ?
             socket.handshake.address.address + ':' + socket.handshake.address.port :
             process.env.DOMAIN;
@@ -45,7 +45,7 @@ module.exports = function (socketio) {
     socket.connectedAt = new Date();
 
     // Call onDisconnect.
-    socket.on('disconnect', function () {
+    socket.on('disconnect', () => {
       onDisconnect(socket);
       console.info('[%s] DISCONNECTED', socket.address);
     });

@@ -9,8 +9,8 @@
 
 'use strict';
 
-const _ = require('lodash');
-const Thing = require('./thing.model');
+let _ = require('lodash');
+let Thing = require('./thing.model');
 
 // Get list of things
 exports.index = function(req, res) {
