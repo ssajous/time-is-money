@@ -1,27 +1,42 @@
 'use strict';
 
+let http;
+let myScope;
+let mySocket;
+
+class MainController {
+  constructor($scope, $http, socket) {
+    this.awesomeThings = [];
+    this.newThing = '';
+    http = $http;
+    myScope = $scope;
+    mySocket = socket;
+
+    http.get('/api/things').success(awesomeThings => {
+      this.awesomeThings = awesomeThings;
+      mySocket.syncUpdates('thing', this.awesomeThings);
+
+      myScope.$on('$destroy', () => {
+        mySocket.unsycUpdates('thing');
+      });
+    });
+  }
+
+  addThing() {
+    if (this.newThing === '') {
+      return;
+    }
+    http.post('/api/things', { name: this.newThing });
+    this.newThing = '';
+  }
+
+  deleteThing(thing)
+  {
+    http.delete(`api/things/${thing._id}`);
+  }
+}
+
+MainController.$inject =['$scope', '$http', 'socket'];
+
 angular.module('timeIsMoneyApp')
-  .controller('MainCtrl', function ($scope, $http, socket) {
-    $scope.awesomeThings = [];
-
-    $http.get('/api/things').success(function(awesomeThings) {
-      $scope.awesomeThings = awesomeThings;
-      socket.syncUpdates('thing', $scope.awesomeThings);
-    });
-
-    $scope.addThing = function() {
-      if($scope.newThing === '') {
-        return;
-      }
-      $http.post('/api/things', { name: $scope.newThing });
-      $scope.newThing = '';
-    };
-
-    $scope.deleteThing = function(thing) {
-      $http.delete('/api/things/' + thing._id);
-    };
-
-    $scope.$on('$destroy', function () {
-      socket.unsyncUpdates('thing');
-    });
-  });
+  .controller('MainCtrl', MainController);
