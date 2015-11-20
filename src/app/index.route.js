@@ -1,11 +1,11 @@
 export function routerConfig ($stateProvider, $urlRouterProvider) {
   'ngInject';
   $stateProvider
-    .state('home', {
+    .state('calendar', {
       url: '/',
-      templateUrl: 'app/main/main.html',
-      controller: 'MainController',
-      controllerAs: 'main'
+      templateUrl: 'app/calendar/calendar.html',
+      controller: 'CalendarController',
+      controllerAs: 'cal'
     });
 
   $urlRouterProvider.otherwise('/');

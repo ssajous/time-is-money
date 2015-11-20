@@ -1,10 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div layout="column" flex="100" id="calendar" layout-margin>
+  <form ng-submit="cal.calculateTotal()">
+    <div flex>
+      <label for="start-date">Start Date</label>
+      <md-datepicker id="start-date" ng-model="cal.startDate" md-placeholder="Start Date"></md-datepicker>
 
-</body>
-</html>
+      <label for="end-date">End Date</label>
+      <md-datepicker id="end-date" ng-model="cal.endDate" md-placeholder="End Date"></md-datepicker>
+    </div>
+    <div layout="row">
+      <md-input-container>
+        <label for="txtRate">Hourly Rate</label>
+        <input id="txtRate" type="number" ng-model="cal.rate" required>
+      </md-input-container>
+      <md-input-container>
+        <label for="txtHours">Avg Hours/Day</label>
+        <input id="txtHours" type="number" ng-model="cal.hoursPerDay">
+      </md-input-container>
+      <md-button type="submit" ng-click="cal.calculateTotal()">Calculate</md-button>
+    </div>
+  </form>
+</div>
+<div layout="column" flex ng-show="cal.totalAmount > 0" layout-align="start start">
+  <div>
+    Total Amount: {{cal.totalAmount | currency}}
+  </div>
+  <div>
+    Total Working Days: {{cal.totalWorkingDays}}
+  </div>
+  <div>
+    Total Working Hours: {{cal.workingHours}}
+  </div>
+  <div id="timeBreakdown">
+    <ul>
+      <li ng-repeat="day in cal.days" class="md-2-line">
+        <h4>{{day.label}} </h4>
+        <span>{{day.hours}} hours - {{day.amount | currency}}</span>
+      </li>
+    </ul>
+  </div>
+</div>
+
